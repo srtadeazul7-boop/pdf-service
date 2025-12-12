@@ -2,9 +2,12 @@ import express from "express";
 import puppeteer from "puppeteer";
 
 const app = express();
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "10mb" }));
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
+app.get("/", (req, res) => {
+  res.send("PDF Service OK");
+});
 
 app.post("/render", async (req, res) => {
   const { html, options } = req.body || {};
@@ -42,5 +45,5 @@ app.post("/render", async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`pdf-service listening on :${port}`));
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`pdf-service listening on port ${port}`));
